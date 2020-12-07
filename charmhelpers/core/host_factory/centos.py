@@ -1,5 +1,5 @@
 import subprocess
-import yum
+import dnf
 import os
 
 from charmhelpers.core.strutils import BasicStringComparator
@@ -61,9 +61,12 @@ def cmp_pkgrevno(package, revno, pkgcache=None):
     is None.
     """
     if not pkgcache:
-        y = yum.YumBase()
-        packages = y.doPackageLists()
-        pkgcache = {i.Name: i.version for i in packages['installed']}
+        y = dnf.Base()
+        y.read_all_repos()
+        y.fill_sack()
+        q = y.sack.query()
+        q_installed = q.installed()
+        pkgcache = {i.name: i.version for i in q_installed.run()}
     pkg = pkgcache[package]
     if pkg > revno:
         return 1

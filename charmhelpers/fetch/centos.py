@@ -16,7 +16,7 @@ import subprocess
 import os
 import time
 import six
-import yum
+import dnf
 
 from tempfile import NamedTemporaryFile
 from charmhelpers.core.hookenv import log
@@ -28,9 +28,12 @@ YUM_NO_LOCK_RETRY_COUNT = 30  # Retry to acquire the lock X times.
 
 def filter_installed_packages(packages):
     """Return a list of packages that require installation."""
-    yb = yum.YumBase()
-    package_list = yb.doPackageLists()
-    temp_cache = {p.base_package_name: 1 for p in package_list['installed']}
+    yb = dnf.Base()
+    yb.read_all_repos()
+    yb.fill_sack()
+    q = yb.sack.query()
+    installed_package = q.installed()
+    temp_cache = {p.name: 1 for p in installed_package.run()}
 
     _pkgs = [p for p in packages if not temp_cache.get(p, False)]
     return _pkgs
