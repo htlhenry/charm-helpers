@@ -1,5 +1,5 @@
 import subprocess
-import dnf
+# import dnf
 import os
 
 from charmhelpers.core.strutils import BasicStringComparator
@@ -60,16 +60,17 @@ def cmp_pkgrevno(package, revno, pkgcache=None):
     This function imports YumBase function if the pkgcache argument
     is None.
     """
-    if not pkgcache:
-        y = dnf.Base()
-        y.read_all_repos()
-        y.fill_sack()
-        q = y.sack.query()
-        q_installed = q.installed()
-        pkgcache = {i.name: i.version for i in q_installed.run()}
-    pkg = pkgcache[package]
-    if pkg > revno:
-        return 1
-    if pkg < revno:
-        return -1
     return 0
+    # if not pkgcache:
+    #     y = dnf.Base()
+    #     y.read_all_repos()
+    #     y.fill_sack()
+    #     q = y.sack.query()
+    #     q_installed = q.installed()
+    #     pkgcache = {i.name: i.version for i in q_installed.run()}
+    # pkg = pkgcache[package]
+    # if pkg > revno:
+    #     return 1
+    # if pkg < revno:
+    #     return -1
+    # return 0
