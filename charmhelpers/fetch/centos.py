@@ -40,6 +40,10 @@ def filter_installed_packages(packages):
     return _pkgs
 
 
+def filter_missing_packages(packages):
+    return []
+
+
 def install(packages, options=None, fatal=False):
     """Install one or more packages."""
     cmd = ['yum', '--assumeyes']

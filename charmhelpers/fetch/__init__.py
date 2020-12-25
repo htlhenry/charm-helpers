@@ -85,10 +85,10 @@ fetch = importlib.import_module(module)
 
 filter_installed_packages = fetch.filter_installed_packages
 filter_missing_packages = fetch.filter_missing_packages
-install = fetch.apt_install
-upgrade = fetch.apt_upgrade
-update = _fetch_update = fetch.apt_update
-purge = fetch.apt_purge
+install = fetch.install
+upgrade = fetch.upgrade
+update = _fetch_update = fetch.update
+purge = fetch.purge
 add_source = fetch.add_source
 
 if __platform__ == "ubuntu":
